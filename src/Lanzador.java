@@ -49,6 +49,14 @@ public class Lanzador {
             System.out.println("Error al leer el fichero");
         }
 
+        for (Process process : processList) {
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         for (String outputFile : outputFiles) {
             try (BufferedReader reader = new BufferedReader(new FileReader(new File(outputFile)))) {
                 String line = reader.readLine();
