@@ -29,6 +29,8 @@ public class Lanzador {
         List<Process> processList = new ArrayList<>();
         List<String> outputFiles = new ArrayList<>();
         int lineCount = 0;
+        int totalWords = 0;
+
 
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("data/Citas_R&J.txt")))) {
             String line;
@@ -45,6 +47,20 @@ public class Lanzador {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al leer el fichero");
+        }
+
+        for (String outputFile : outputFiles) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File(outputFile)))) {
+                String line = reader.readLine();
+                if (line != null && line.startsWith("El número de palabras es: ")) {
+                    int wordCount = Integer.parseInt(line.replace("El número de palabras es: ", "").trim());
+                    System.out.println("Archivo " + outputFile + ": " + line);
+                    totalWords += wordCount;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error al leer el archivo: " + outputFile);
+            }
         }
     }
     
