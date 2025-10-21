@@ -70,6 +70,20 @@ public class Lanzador {
                 System.out.println("Error al leer el archivo: " + outputFile);
             }
         }
+
+        for (String outputFile : outputFiles) {
+            File file = new File(outputFile);
+            if (file.exists()) {
+                if (file.delete()) {
+                    System.out.println("Archivo eliminado: " + outputFile);
+                } else {
+                    System.out.println("No se pudo eliminar el archivo: " + outputFile);
+                }
+            }
+        }
+
+        System.out.println("Total de líneas: " + lineCount);
+        System.out.println("Total de palabras: " + totalWords);
     }
     
     
