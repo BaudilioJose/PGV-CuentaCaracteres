@@ -1,8 +1,16 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 
 
 public class Lanzador {
+
+    
+
     private static Process startProcess(String textLine, String fileNamePath) {
         String classPath = System.getProperty("java.class.path");
         String className = "App";
@@ -15,5 +23,30 @@ public class Lanzador {
             e.printStackTrace();
             return null;
         }   
-    } 
+    }
+
+    public static void main(String[] args) {
+        List<Process> processList = new ArrayList<>();
+        List<String> outputFiles = new ArrayList<>();
+        int lineCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("data/Citas_R&J.txt")))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lineCount++;
+                String outputFileName = "output_linea_" + lineCount + ".txt";
+                outputFiles.add(outputFileName);
+
+                Process process = startProcess(line, outputFileName);
+                if (process != null) {
+                    processList.add(process);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al leer el fichero");
+        }
+    }
+    
+    
 }
